@@ -1,0 +1,62 @@
+<Window x:Class="Skypod.Studio.AuthorPackWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SkyPod — Modlist Author" Width="920" Height="760" MinWidth="820" MinHeight="670"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <Grid Margin="24">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel Margin="0,0,0,20">
+            <TextBlock Text="YOUR MODLIST. YOUR SOUNDTRACK." FontSize="23" FontWeight="SemiBold" Foreground="{StaticResource GoldBrush}"/>
+            <TextBlock Text="Ship a finished soundtrack to players, or share an editable project with another author."
+                       Foreground="{StaticResource MutedBrush}" Margin="0,6,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="22"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="0,0,8,0">
+                    <TextBlock Text="SOUNDTRACK DETAILS" Foreground="{StaticResource GoldBrush}" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    <TextBlock Text="Name"/><TextBox Text="{Binding Library.Name, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,12"/>
+                    <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="2*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <StackPanel Margin="0,0,12,0"><TextBlock Text="Author"/><TextBox Text="{Binding Library.Pack.Author, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,12"/></StackPanel>
+                        <StackPanel Grid.Column="1"><TextBlock Text="Version"/><TextBox Text="{Binding Library.Pack.Version, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,12"/></StackPanel>
+                    </Grid>
+                    <TextBlock Text="Description"/><TextBox Text="{Binding Library.Pack.Description, UpdateSourceTrigger=PropertyChanged}" Height="68" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,4,0,12"/>
+                    <TextBlock Text="Required plugins · one per line"/>
+                    <TextBlock Text="Location and playlist requirements are filled in automatically." FontSize="11" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap"/>
+                    <TextBox Text="{Binding RequiredPluginsText, UpdateSourceTrigger=PropertyChanged}" Height="72" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Margin="0,4,0,12"/>
+                    <TextBlock Text="Music dependencies, credits and license notices" TextWrapping="Wrap"/>
+                    <TextBox Text="{Binding Library.Pack.MusicDependencies, UpdateSourceTrigger=PropertyChanged}" Height="88" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,4,0,6"/>
+                    <TextBlock Text="List required music mods and include any attribution needed for bundled music." FontSize="11" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </ScrollViewer>
+            <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Border Padding="16" Background="{StaticResource PanelBrush}" BorderBrush="#8F703D" BorderThickness="1" CornerRadius="8" Margin="0,0,0,12">
+                        <StackPanel>
+                            <TextBlock Text="FOR PLAYERS" Foreground="{StaticResource GoldBrush}" FontWeight="SemiBold"/>
+                            <TextBlock Text="A ready-to-install soundtrack ZIP for MO2, Vortex and your Wabbajack list. Players need SkyPod; Studio is optional."
+                                       TextWrapping="Wrap" Margin="0,8,0,12"/>
+                            <Button Content="BUILD + EXPORT PLAYER ZIP" Click="Player_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="0"/>
+                            <TextBlock Text="Rebuilds using the active modlist and your current song assignments." FontSize="11" TextWrapping="Wrap" Foreground="{StaticResource MutedBrush}" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Padding="16" Background="{StaticResource PanelBrush}" BorderBrush="#49375E" BorderThickness="1" CornerRadius="8" Margin="0,0,0,12">
+                        <StackPanel>
+                            <TextBlock Text="FOR AUTHORS" Foreground="{StaticResource GoldBrush}" FontWeight="SemiBold"/>
+                            <TextBlock Text="Editable songs, categories, weights and location assignments. Import and merge projects before building one final soundtrack."
+                                       TextWrapping="Wrap" Margin="0,8,0,10"/>
+                            <CheckBox x:Name="IncludeAudioBox" Content="Include imported audio" IsChecked="True" Margin="0,0,0,5"/>
+                            <TextBlock Text="Bundle music you can redistribute. Leave unchecked to share settings that use the recipient's original audio files."
+                                       FontSize="11" TextWrapping="Wrap" Foreground="{StaticResource MutedBrush}" Margin="0,0,0,12"/>
+                            <Button Content="EXPORT AUTHOR PROJECT" Click="Project_Click" Margin="0,0,0,8"/>
+                            <Button Content="IMPORT AND MERGE PROJECT" Click="Import_Click" Margin="0"/>
+                        </StackPanel>
+                    </Border>
+                    <TextBlock Text="Use one generated SkyPod output per modlist. Wabbajack authors still supply a supported download source for their exported ZIP."
+                               TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource MutedBrush}"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <Button Grid.Row="2" Content="CLOSE" HorizontalAlignment="Right" IsCancel="True" Margin="0,18,0,0"/>
+    </Grid>
+</Window>

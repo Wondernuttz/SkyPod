@@ -1,0 +1,11 @@
+SKYPOD - THIRD-PARTY COMPONENTS
+
+Original SkyPod software: GPL-3.0-only. See LICENSE.txt and NOTICE.txt.
+The components below retain their existing licenses.
+
+The native plugin uses CommonLibSSE, DirectXMath, DirectXTK, fmt, rapidcsv,
+spdlog and OpenVR. SkyPod also uses the PrismaUI consumer interface.
+Their license and copyright notices are included in Licenses/SkyPod.
+
+PrismaUI VR, SKSEVR, VR Address Library for SKSEVR, SkyUI VR and MCM Helper VR
+are separate requirements. Their binaries are not included in this archive.

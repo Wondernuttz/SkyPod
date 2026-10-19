@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+**/.vs/
+**/*.user
+**/*.suo
+/native-build/
+/publish/
+/build/
+/src/Skypod.Plugin/LocalPaths.cmake
+/tools/runtimes/
+/packaging/StudioLicenses/

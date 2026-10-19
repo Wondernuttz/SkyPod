@@ -1,0 +1,1 @@
+Scriptname SKI_ConfigBase extends SKI_QuestBase

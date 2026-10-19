@@ -1,0 +1,23 @@
+{
+  "modName": "Skypod",
+  "displayName": "Skypod",
+  "minMcmVersion": 11,
+  "cursorFillMode": "topToBottom",
+  "content": [
+    {
+      "text": "General",
+      "type": "header"
+    },
+    {
+      "id": "Skypod_ToggleHotkey:General",
+      "text": "Toggle Hotkey",
+      "type": "keymap",
+      "help": "Press a key to open or close the Skypod Prisma player.",
+      "valueOptions": {
+        "sourceType": "GlobalValue",
+        "sourceForm": "Skypod.esp|800",
+        "defaultValue": 66
+      }
+    }
+  ]
+}

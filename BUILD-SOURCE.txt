@@ -1,0 +1,46 @@
+SkyPod 1.0.0 - build instructions
+
+STUDIO
+The verified build uses .NET SDK 10.0.301 targeting net9.0-windows. global.json
+selects that SDK; packages.lock.json files pin the resolved package versions.
+From your extracted Studio distribution, copy Licenses/ to this source
+tree's packaging/StudioLicenses/, tools/README.txt to tools/README.txt, and
+tools/Skypod.AudioEncoder.exe to tools/runtimes/win-x64/Skypod.AudioEncoder.exe.
+To rebuild the encoder, use its separate LGPL source archive and
+Build-Encoder.sh win-x64. Then run from the SkyPod source directory:
+
+  dotnet restore src/Skypod.Studio/Skypod.Studio.csproj -r win-x64 --locked-mode
+  dotnet publish src/Skypod.Studio/Skypod.Studio.csproj -c Release -r win-x64 --self-contained true --no-restore -o publish -p:DebugType=None -p:DebugSymbols=false
+
+Copy the existing AtlasTerrain folder beside the published program. These
+map images are data independent of the application code; they are already
+included in the Studio download. Refer to SOURCE-README.txt for dependency
+source locations. No network service or signing key is needed to replace
+the Studio executable or its encoder with a compatible modified build.
+
+NATIVE PLUGIN
+Use Visual Studio C++ tools, Ninja, and CMake 3.24 or newer. The matching
+CommonLibSSE and native dependency sources are included under third-party/.
+Their original build-port scripts and patches are under
+third-party/native/build-ports/. Build native dependencies with the
+x64-windows-static triplet. Place the resulting vcpkg_installed directory
+under <PRISMA_BUILD_ROOT>/build/vcpkg_installed.
+
+Copy src/Skypod.Plugin/LocalPaths.cmake.example to LocalPaths.cmake. Set
+CommonLibPath to the included CommonLibSSE directory and PRISMA_BUILD_ROOT to
+your dependency installation root. In an x64 developer shell:
+  cmake -S src/Skypod.Plugin -B native-build -G Ninja -DCMAKE_BUILD_TYPE=Release -DSKYPOD_DEPLOY=OFF
+  cmake --build native-build
+Install native-build/SkypodPlugin.dll as SKSE/Plugins/Skypod.dll. The current
+native build targets Skyrim VR.
+
+BASE PLUGIN AND MCM
+The tools/Skypod.BuildTool project generates the base plugin with:
+  dotnet run --project tools/Skypod.BuildTool/Skypod.BuildTool.csproj -c Release -- create-base-plugin Skypod.esp
+Compile scripts/source/Skypod_MCM.psc with the game's Papyrus compiler,
+game script imports, tools/PapyrusStubs and TESV_Papyrus_Flags.flg. MCM
+configuration and the editable in-game web interface are under mod/Data.
+Game files and third-party interfaces retain their own terms.
+
+The dependency lock files and global.json select the package versions and
+SDK used to verify this source snapshot.

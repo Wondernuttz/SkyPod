@@ -1,0 +1,221 @@
+<Window x:Class="Skypod.Studio.MapPickerWindow"
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ xmlns:local="clr-namespace:Skypod.Studio"
+ Title="SkyPod Studio — Terrain Atlas" Width="1460" Height="900" MinWidth="1120" MinHeight="700"
+ WindowStartupLocation="CenterOwner" ResizeMode="CanResizeWithGrip" Icon="Assets/Skypod-Gold.ico"
+ Background="#100D16" Foreground="#F2EAF8">
+ <Window.Resources>
+  <SolidColorBrush x:Key="GoldBrush" Color="#E5C38B" />
+  <SolidColorBrush x:Key="MutedBrush" Color="#AD9FB9" />
+  <SolidColorBrush x:Key="LavenderBrush" Color="#C1ADC9" />
+  <Style x:Key="AtlasCard" TargetType="Border">
+   <Setter Property="Background" Value="#17121E"/><Setter Property="BorderBrush" Value="#352B40"/>
+   <Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="10"/><Setter Property="Padding" Value="14"/>
+  </Style>
+  <Style TargetType="ScrollBar">
+   <Setter Property="Width" Value="10"/><Setter Property="Background" Value="#15101C"/>
+   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ScrollBar">
+    <Grid Background="{TemplateBinding Background}"><Track x:Name="PART_Track" IsDirectionReversed="True">
+     <Track.DecreaseRepeatButton><RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False"/></Track.DecreaseRepeatButton>
+     <Track.Thumb><Thumb Background="#57445F"><Thumb.Template><ControlTemplate TargetType="Thumb"><Border Background="{TemplateBinding Background}" CornerRadius="4" Margin="2"/></ControlTemplate></Thumb.Template></Thumb></Track.Thumb>
+     <Track.IncreaseRepeatButton><RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False"/></Track.IncreaseRepeatButton>
+    </Track></Grid>
+   </ControlTemplate></Setter.Value></Setter>
+  </Style>
+  <Style TargetType="TabItem">
+   <Setter Property="Foreground" Value="#AD9FB9"/><Setter Property="Background" Value="#17121E"/>
+   <Setter Property="Padding" Value="10,9"/><Setter Property="Template"><Setter.Value>
+    <ControlTemplate TargetType="TabItem"><Border x:Name="Tab" Background="{TemplateBinding Background}" BorderBrush="#352B40" BorderThickness="0,0,0,1" Padding="{TemplateBinding Padding}"><ContentPresenter ContentSource="Header"/></Border>
+     <ControlTemplate.Triggers><Trigger Property="IsSelected" Value="True"><Setter Property="Foreground" Value="#E5C38B"/><Setter TargetName="Tab" Property="BorderBrush" Value="#E5C38B"/><Setter TargetName="Tab" Property="BorderThickness" Value="0,0,0,2"/></Trigger></ControlTemplate.Triggers>
+    </ControlTemplate>
+   </Setter.Value></Setter>
+  </Style>
+  <Style x:Key="RealmItem" TargetType="ListBoxItem">
+   <Setter Property="HorizontalContentAlignment" Value="Stretch"/><Setter Property="Margin" Value="0,2"/><Setter Property="AutomationProperties.Name" Value="{Binding Name}"/>
+   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem">
+    <Border x:Name="Shell" Background="Transparent" BorderBrush="Transparent" BorderThickness="1" CornerRadius="7" Padding="10,10"><ContentPresenter/></Border>
+    <ControlTemplate.Triggers>
+     <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Shell" Property="Background" Value="#281E31"/></Trigger>
+     <Trigger Property="IsSelected" Value="True"><Setter TargetName="Shell" Property="Background" Value="#352736"/><Setter TargetName="Shell" Property="BorderBrush" Value="#876B4B"/></Trigger>
+    </ControlTemplate.Triggers>
+   </ControlTemplate></Setter.Value></Setter>
+  </Style>
+ </Window.Resources>
+ <Grid Margin="20,14">
+  <Grid.RowDefinitions><RowDefinition Height="76"/><RowDefinition Height="*"/><RowDefinition Height="48"/></Grid.RowDefinitions>
+  <Grid>
+   <StackPanel Orientation="Horizontal"><Image Source="Assets/Skypod-Emblem.png" Width="56" Height="60" Margin="0,0,15,0"/>
+    <StackPanel VerticalAlignment="Center"><TextBlock Text="S K Y P O D   /   A T L A S" Foreground="{StaticResource GoldBrush}" FontSize="11"/>
+     <TextBlock Text="A soundtrack for every place" FontFamily="Georgia" FontSize="25" Margin="0,5,0,0"/>
+    </StackPanel>
+   </StackPanel>
+   <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+    <TextBlock x:Name="SongCountText" Foreground="{StaticResource GoldBrush}" FontSize="12" TextAlignment="Right"/>
+    <TextBlock x:Name="MapStatusText" Foreground="{StaticResource MutedBrush}" FontSize="10" Margin="0,7,0,0" TextAlignment="Right"/>
+   </StackPanel>
+  </Grid>
+  <Grid Grid.Row="1">
+   <Grid.ColumnDefinitions><ColumnDefinition Width="238"/><ColumnDefinition Width="*"/><ColumnDefinition Width="268"/></Grid.ColumnDefinitions>
+   <Border Style="{StaticResource AtlasCard}" Margin="0,0,14,0" Padding="12">
+    <Grid>
+     <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+     <TextBlock Text="FIND YOUR PLACE" Foreground="{StaticResource GoldBrush}" FontSize="10" Margin="2,2,0,10"/>
+     <TextBox x:Name="SearchBox" Grid.Row="1" TextChanged="SearchBox_TextChanged" KeyDown="SearchBox_KeyDown" ToolTip="Search all cities, holds, homes, dungeons and enabled mod locations" Padding="10,8"/>
+     <ListBox x:Name="SearchResults" Grid.Row="2" MaxHeight="230" Visibility="Collapsed" Margin="0,7,0,10" Background="#100C17" BorderBrush="#352B40"
+      ScrollViewer.HorizontalScrollBarVisibility="Disabled" PreviewMouseLeftButtonDown="SearchResults_PreviewMouseLeftButtonDown" KeyDown="SearchResults_KeyDown">
+      <ListBox.ItemContainerStyle><Style TargetType="ListBoxItem"><Setter Property="AutomationProperties.Name" Value="{Binding Name}"/></Style></ListBox.ItemContainerStyle>
+      <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="5,4">
+                                    <TextBlock Text="{Binding Name}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="{Binding Detail}" Foreground="{StaticResource MutedBrush}" FontSize="9"
+                                               TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+     </ListBox>
+     <TabControl x:Name="NavigationTabs" Grid.Row="3" SelectedIndex="1" Margin="0,16,0,0" Background="Transparent" BorderThickness="0" Padding="0,10,0,0">
+      <TabItem x:Name="CityPlacesTab" Header="Places">
+       <DockPanel><TextBlock x:Name="DirectorySummary" DockPanel.Dock="Top" Foreground="{StaticResource MutedBrush}" FontSize="10" TextWrapping="Wrap" Margin="3,0,3,8"/>
+       <ListBox x:Name="CityPlacesList" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        PreviewMouseLeftButtonDown="CityPlaces_PreviewMouseLeftButtonDown" KeyDown="CityPlaces_KeyDown">
+        <ListBox.ItemTemplate><DataTemplate><StackPanel Margin="3,6">
+         <TextBlock Text="{Binding Name}" Foreground="{StaticResource TextBrush}" TextWrapping="Wrap"/>
+         <TextBlock Text="{Binding BuildingDetail}" Foreground="{StaticResource MutedBrush}" FontSize="9" TextWrapping="Wrap" Margin="0,3,0,0"/>
+        </StackPanel></DataTemplate></ListBox.ItemTemplate>
+       </ListBox>
+       </DockPanel>
+      </TabItem>
+      <TabItem Header="Realms">
+       <ListBox x:Name="RealmList" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        ItemContainerStyle="{StaticResource RealmItem}" SelectionChanged="RealmList_SelectionChanged">
+        <ListBox.ItemTemplate><DataTemplate><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="28"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+         <TextBlock Text="{Binding Glyph}" FontSize="17" Foreground="{Binding AccentBrush}" VerticalAlignment="Center"/>
+         <StackPanel Grid.Column="1"><TextBlock Text="{Binding Name}" FontSize="12" TextTrimming="CharacterEllipsis"/>
+          <TextBlock Text="{Binding Detail}" Foreground="{StaticResource MutedBrush}" FontSize="9" Margin="0,4,0,0"/>
+         </StackPanel></Grid></DataTemplate></ListBox.ItemTemplate>
+       </ListBox>
+      </TabItem>
+      <TabItem Header="Songs">
+       <DockPanel><StackPanel DockPanel.Dock="Top" Margin="0,0,0,8"><TextBlock Text="Choose songs for these places" Foreground="{StaticResource MutedBrush}" FontSize="10"/>
+        <Button Content="Select all songs" Click="SelectAllSongs_Click" Margin="0,8,0,0" Padding="8,6"/></StackPanel>
+        <ListBox x:Name="SongList" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+         <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#30213E" BorderThickness="0,0,0,1" Padding="4,6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  VerticalAlignment="Top" Margin="0,3,8,0" />
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="{Binding Title}" Foreground="{StaticResource TextBrush}"
+                                                       FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+                                            <ComboBox ItemsSource="{Binding DataContext.CategoryOptions, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                      DisplayMemberPath="Name" SelectedValuePath="Value"
+                                                      SelectedValue="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      IsEnabled="{Binding IsCategoryEditable}" Margin="0,4,0,0" Padding="4,1" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+        </ListBox>
+       </DockPanel>
+      </TabItem>
+     </TabControl>
+     <StackPanel Grid.Row="4" Margin="2,10,0,0"><TextBlock x:Name="SearchCountText" Foreground="{StaticResource MutedBrush}" FontSize="9"/>
+      <TextBlock Text="Search includes places beyond the current map." Foreground="{StaticResource MutedBrush}" FontSize="9" TextWrapping="Wrap" Margin="0,5,0,0"/>
+     </StackPanel>
+     <ComboBox x:Name="OtherRealmCombo" Visibility="Collapsed" SelectionChanged="OtherRealmCombo_SelectionChanged"/>
+    </Grid>
+   </Border>
+   <Grid Grid.Column="1" Margin="0,0,14,0">
+    <Grid.RowDefinitions><RowDefinition Height="64"/><RowDefinition Height="*"/><RowDefinition Height="29"/></Grid.RowDefinitions>
+    <Grid><StackPanel VerticalAlignment="Center"><TextBlock Text="EXPLORE THE WORLD" Foreground="{StaticResource MutedBrush}" FontSize="9"/>
+     <TextBlock x:Name="RealmNameText" Text="Skyrim" Foreground="#F5E5CF" FontFamily="Georgia" FontSize="26" Margin="0,5,0,0"/></StackPanel>
+     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+      <CheckBox x:Name="BoundariesToggle" Content="Hold highlights" IsChecked="True" Checked="Boundaries_Changed" Unchecked="Boundaries_Changed" Foreground="{StaticResource MutedBrush}" FontSize="10" VerticalAlignment="Center" Margin="0,0,12,0"/>
+      <Button Content="Fit map" Click="FitMap_Click" Padding="12,8"/>
+     </StackPanel>
+    </Grid>
+    <Border Grid.Row="1" Background="#11131A" BorderBrush="#665044" BorderThickness="1" CornerRadius="10" ClipToBounds="True">
+     <Grid><local:SoundtrackMapCanvas x:Name="MapCanvas"/>
+      <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14" Background="#E019121F" BorderBrush="#6B5544" BorderThickness="1" CornerRadius="5" Padding="10,6" IsHitTestVisible="False">
+       <TextBlock x:Name="TerrainStatusText" Text="Terrain view" Foreground="#E5C38B" FontSize="10"/>
+      </Border>
+      <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,84,14,0">
+       <Button Content="+" Click="ZoomIn_Click" Width="38" Height="35" FontSize="20" Padding="0" ToolTip="Zoom in"/>
+       <TextBlock x:Name="ZoomText" Text="1×" Foreground="{StaticResource GoldBrush}" Background="#E019121F" TextAlignment="Center" Padding="0,6" FontSize="10"/>
+       <Button Content="−" Click="ZoomOut_Click" Width="38" Height="35" FontSize="20" Padding="0" ToolTip="Zoom out"/>
+      </StackPanel>
+      <Border x:Name="HoverCard" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="14,0,65,36" MaxWidth="380" Background="#EC201725" BorderBrush="#876B55" BorderThickness="1" CornerRadius="7" Padding="13,10" Visibility="Collapsed" IsHitTestVisible="False">
+       <StackPanel><TextBlock x:Name="HoverName" Foreground="#F5E5CF" FontFamily="Georgia" FontSize="18" TextWrapping="Wrap"/>
+        <TextBlock x:Name="HoverDetail" Foreground="{StaticResource MutedBrush}" FontSize="10" Margin="0,5,0,0" TextWrapping="Wrap"/>
+       </StackPanel>
+      </Border>
+      <TextBlock Text="SCROLL INTO CITIES AND BACK OUT   ·   DRAG TO EXPLORE   ·   CLICK TO ASSIGN" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="12" FontSize="9" Foreground="#DFCFDA" IsHitTestVisible="False">
+       <TextBlock.Effect><DropShadowEffect BlurRadius="5" ShadowDepth="1" Opacity="1"/></TextBlock.Effect>
+      </TextBlock>
+      <Border x:Name="MapReadyPanel" Visibility="Collapsed" Background="#F017121E" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="22" MaxWidth="360" CornerRadius="9">
+       <StackPanel><TextBlock Text="Load your world's locations" FontFamily="Georgia" FontSize="21" Foreground="{StaticResource GoldBrush}"/>
+        <TextBlock Text="Refresh the active load order to add locations to the Atlas." TextWrapping="Wrap" Margin="0,10,0,15" Foreground="{StaticResource MutedBrush}"/>
+        <Button Content="Refresh locations" Click="RefreshMap_Click"/>
+       </StackPanel>
+      </Border>
+     </Grid>
+    </Border>
+    <Grid Grid.Row="2" VerticalAlignment="Center"><TextBlock Text="Areas: hold boundaries · Gold ring: assigned · White brackets: viewing" Foreground="{StaticResource MutedBrush}" FontSize="9"/>
+     <TextBlock Text="North up · terrain from your local library" HorizontalAlignment="Right" Foreground="{StaticResource MutedBrush}" FontSize="9"/>
+    </Grid>
+   </Grid>
+   <Border Grid.Column="2" Style="{StaticResource AtlasCard}" Padding="13">
+    <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+     <StackPanel><TextBlock Text="YOUR SOUNDTRACK" Foreground="{StaticResource GoldBrush}" FontSize="10"/>
+      <Button x:Name="CityBackButton" Content="← Back to world map" Visibility="Collapsed" Click="CityBack_Click" Margin="0,12,0,0" Padding="9,8"/>
+      <TextBlock x:Name="PlaceNameText" Text="Choose a location" FontFamily="Georgia" Foreground="#F5E5CF" FontSize="23" TextWrapping="Wrap" Margin="0,12,0,0"/>
+      <TextBlock x:Name="PlaceContextText" Foreground="{StaticResource MutedBrush}" FontSize="10" TextWrapping="Wrap" Margin="0,9,0,0"/>
+      <TextBlock x:Name="PlaceAssignmentText" Visibility="Collapsed" Foreground="{StaticResource MutedBrush}" FontSize="11" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,10,0,0"/>
+      <TextBlock x:Name="AccuracyText" Foreground="{StaticResource MutedBrush}" FontSize="11" TextWrapping="Wrap" Margin="0,18,0,18"/>
+      <Button x:Name="CityMapButton" Content="Open city map →" Visibility="Collapsed" Click="CityMap_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,0,16" Padding="9,10"/>
+      <Button x:Name="ExteriorMapButton" Content="View exterior location" Visibility="Collapsed" Click="ExteriorMap_Click" Margin="0,0,0,16" Padding="9,10"/>
+     </StackPanel>
+     <TextBlock Grid.Row="1" Text="PLAYBACK SCOPE" Foreground="{StaticResource GoldBrush}" FontSize="10" Margin="0,0,0,9"/>
+     <ListBox x:Name="ScopeList" Grid.Row="2" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+      <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Checked="ScopeCheck_Changed" Unchecked="ScopeCheck_Changed" Tag="{Binding}"
+                                          Margin="0,0,0,7">
+                                    <Border Background="#100C17" BorderBrush="#3E2C50" BorderThickness="1"
+                                            CornerRadius="7" Padding="9" Width="202">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding Detail}" Foreground="{StaticResource MutedBrush}" FontSize="9"
+                                                       TextWrapping="Wrap" Margin="0,3,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                </CheckBox>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+     </ListBox>
+     <StackPanel Grid.Row="3"><TextBlock x:Name="SelectionCountText" Foreground="{StaticResource GoldBrush}" FontSize="11" Margin="0,0,0,8"/>
+      <Button x:Name="RouteEntireRealmButton" Content="Select entire realm" Click="RouteEntireRealm_Click" Padding="8,8" FontSize="10"/>
+      <Button Content="Clear assignments" Click="ClearAll_Click" Padding="8,7" Margin="0,6,0,0" FontSize="10"/>
+     </StackPanel>
+    </Grid>
+   </Border>
+  </Grid>
+  <Grid Grid.Row="2" VerticalAlignment="Bottom"><StackPanel Orientation="Horizontal">
+   <Button x:Name="RefreshMapButton" Content="Refresh locations" Click="RefreshMap_Click" Padding="12,8" FontSize="10"/>
+   <Button Content="Terrain library…" Click="TerrainLibrary_Click" Padding="12,8" FontSize="10" Margin="8,0,0,0" ToolTip="Choose a local terrain library containing catalog.json and terrain images"/>
+  </StackPanel><StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+   <Button Content="Cancel" Click="Cancel_Click" Padding="18,9"/>
+   <Button x:Name="ApplyButton" Content="Apply to song" Click="Apply_Click" Style="{StaticResource PrimaryButtonStyle}" Padding="24,9" Margin="8,0,0,0"/>
+  </StackPanel></Grid>
+ </Grid>
+</Window>

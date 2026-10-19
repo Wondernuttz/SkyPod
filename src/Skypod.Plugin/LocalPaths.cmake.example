@@ -1,0 +1,3 @@
+# Configure these paths for the native build on your machine.
+set(PRISMA_BUILD_ROOT "C:/SkyPodDependencies")
+set(CommonLibPath "C:/SkyPodDependencies/CommonLibSSE")

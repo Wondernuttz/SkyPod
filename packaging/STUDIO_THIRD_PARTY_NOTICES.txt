@@ -1,0 +1,225 @@
+SKYPOD STUDIO - THIRD-PARTY COMPONENTS
+
+Original SkyPod software: GPL-3.0-only. See LICENSE.txt and NOTICE.txt.
+The components below retain their existing licenses.
+
+Studio includes the components listed below. Each component retains its
+own license. Package-supplied license and notice texts are in Licenses.
+Package pages identify the upstream projects and source locations.
+
+DynamicData 9.4.31
+Package: https://www.nuget.org/packages/DynamicData/9.4.31
+Authors: Roland Pheasant
+Copyright (c) Roland Pheasant 2011-2026
+License: MIT
+
+FluentResults 3.15.2
+Package: https://www.nuget.org/packages/FluentResults/3.15.2
+Authors: Michael Altmann
+Copyright 2022 (c) Michael Altmann. All rights reserved.
+License: MIT
+
+GameFinder.Common 4.9.0
+Package: https://www.nuget.org/packages/GameFinder.Common/4.9.0
+Authors: erri120
+License: GPL-3.0-only
+
+GameFinder.RegistryUtils 4.9.0
+Package: https://www.nuget.org/packages/GameFinder.RegistryUtils/4.9.0
+Authors: erri120
+License: GPL-3.0-only
+
+GameFinder.StoreHandlers.GOG 4.9.0
+Package: https://www.nuget.org/packages/GameFinder.StoreHandlers.GOG/4.9.0
+Authors: erri120
+License: GPL-3.0-only
+
+GameFinder.StoreHandlers.Steam 4.9.0
+Package: https://www.nuget.org/packages/GameFinder.StoreHandlers.Steam/4.9.0
+Authors: erri120
+License: GPL-3.0-only
+
+GameFinder.StoreHandlers.Xbox 4.9.0
+Package: https://www.nuget.org/packages/GameFinder.StoreHandlers.Xbox/4.9.0
+Authors: erri120
+License: GPL-3.0-only
+
+GameFinder.Wine 4.9.0
+Package: https://www.nuget.org/packages/GameFinder.Wine/4.9.0
+Authors: erri120
+License: GPL-3.0-only
+
+K4os.Compression.LZ4.Streams 1.3.8
+Package: https://www.nuget.org/packages/K4os.Compression.LZ4.Streams/1.3.8
+Authors: Milosz Krajewski
+Milosz Krajewski
+License: https://github.com/MiloszKrajewski/K4os.Compression.LZ4/blob/master/LICENSE?raw=true
+
+K4os.Compression.LZ4 1.3.8
+Package: https://www.nuget.org/packages/K4os.Compression.LZ4/1.3.8
+Authors: Milosz Krajewski
+Milosz Krajewski
+License: https://github.com/MiloszKrajewski/K4os.Compression.LZ4/blob/master/LICENSE?raw=true
+
+K4os.Hash.xxHash 1.0.8
+Package: https://www.nuget.org/packages/K4os.Hash.xxHash/1.0.8
+Authors: Milosz Krajewski
+Milosz Krajewski
+License: https://raw.githubusercontent.com/MiloszKrajewski/K4os.Hash.xxHash/master/LICENSE
+
+Loqui 3.7.0
+Package: https://www.nuget.org/packages/Loqui/3.7.0
+Authors: Noggog
+License: GPL-3.0; original license included in the source distribution.
+
+Microsoft.Extensions.DependencyInjection.Abstractions 9.0.4
+Package: https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions/9.0.4
+Authors: Microsoft
+© Microsoft Corporation. All rights reserved.
+License: MIT
+
+Microsoft.Extensions.Logging.Abstractions 9.0.4
+Package: https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions/9.0.4
+Authors: Microsoft
+© Microsoft Corporation. All rights reserved.
+License: MIT
+
+Mutagen.Bethesda.Core 0.54.4
+Package: https://www.nuget.org/packages/Mutagen.Bethesda.Core/0.54.4
+Authors: Noggog
+2024
+License: GPL-3.0-only
+
+Mutagen.Bethesda.Kernel 0.54.4
+Package: https://www.nuget.org/packages/Mutagen.Bethesda.Kernel/0.54.4
+Authors: Noggog
+2024
+License: GPL-3.0-only
+
+Mutagen.Bethesda.Skyrim 0.54.4
+Package: https://www.nuget.org/packages/Mutagen.Bethesda.Skyrim/0.54.4
+Authors: Noggog
+2024
+License: GPL-3.0-only
+
+NexusMods.Paths 0.19.1
+Package: https://www.nuget.org/packages/NexusMods.Paths/0.19.1
+Authors: Nexus Mods
+License: GPL-3.0-only
+
+Noggog.CSharpExt 4.3.0
+Package: https://www.nuget.org/packages/Noggog.CSharpExt/4.3.0
+Authors: Noggog
+License: GPL-3.0; original license included in the source distribution.
+
+OneOf 3.0.271
+Package: https://www.nuget.org/packages/OneOf/3.0.271
+Authors: Harry McIntyre
+Harry McIntyre
+License: https://github.com/mcintyre321/OneOf/blob/master/licence.md
+
+Reloaded.Memory 9.4.2
+Package: https://www.nuget.org/packages/Reloaded.Memory/9.4.2
+Authors: Sewer56
+License: LICENSE.md
+
+SharpZipLib 1.4.2
+Package: https://www.nuget.org/packages/SharpZipLib/1.4.2
+Authors: ICSharpCode
+Copyright © 2000-2022 SharpZipLib Contributors
+License: MIT
+
+StrongInject 1.4.4
+Package: https://www.nuget.org/packages/StrongInject/1.4.4
+Authors: StrongInject
+License: MIT
+
+System.Collections.Immutable 10.0.9
+Package: https://www.nuget.org/packages/System.Collections.Immutable/10.0.9
+Authors: Microsoft
+© Microsoft Corporation. All rights reserved.
+License: MIT
+
+System.IO.Abstractions 22.1.1
+Package: https://www.nuget.org/packages/System.IO.Abstractions/22.1.1
+Authors: Tatham Oddie & friends
+Copyright © Tatham Oddie & friends 2010-2026
+License: MIT
+
+System.Interactive.Async 7.0.1
+Package: https://www.nuget.org/packages/System.Interactive.Async/7.0.1
+Authors: .NET Foundation and Contributors
+Copyright (c) .NET Foundation and Contributors.
+License: MIT
+
+System.Linq.Async 7.0.1
+Package: https://www.nuget.org/packages/System.Linq.Async/7.0.1
+Authors: .NET Foundation and Contributors
+Copyright (c) .NET Foundation and Contributors.
+License: MIT
+
+System.Linq.AsyncEnumerable 10.0.6
+Package: https://www.nuget.org/packages/System.Linq.AsyncEnumerable/10.0.6
+Authors: Microsoft
+© Microsoft Corporation. All rights reserved.
+License: MIT
+
+System.Reactive 6.1.0
+Package: https://www.nuget.org/packages/System.Reactive/6.1.0
+Authors: .NET Foundation and Contributors
+Copyright (c) .NET Foundation and Contributors.
+License: MIT
+
+System.Text.Encoding.CodePages 10.0.9
+Package: https://www.nuget.org/packages/System.Text.Encoding.CodePages/10.0.9
+Authors: Microsoft
+© Microsoft Corporation. All rights reserved.
+License: MIT
+
+TestableIO.System.IO.Abstractions.Wrappers 22.1.1
+Package: https://www.nuget.org/packages/TestableIO.System.IO.Abstractions.Wrappers/22.1.1
+Authors: Tatham Oddie & friends
+Copyright © Tatham Oddie & friends 2010-2026
+License: MIT
+
+TestableIO.System.IO.Abstractions 22.1.1
+Package: https://www.nuget.org/packages/TestableIO.System.IO.Abstractions/22.1.1
+Authors: Tatham Oddie & friends
+Copyright © Tatham Oddie & friends 2010-2026
+License: MIT
+
+Testably.Abstractions.FileSystem.Interface 10.1.0
+Package: https://www.nuget.org/packages/Testably.Abstractions.FileSystem.Interface/10.1.0
+Authors: Testably
+Copyright (c) 2024- 2026 Testably
+License: MIT
+
+TransparentValueObjects.Abstractions 1.1.0
+Package: https://www.nuget.org/packages/TransparentValueObjects.Abstractions/1.1.0
+Authors: TransparentValueObjects.Abstractions
+License information: see the upstream package page.
+
+ValveKeyValue 0.13.1.398
+Package: https://www.nuget.org/packages/ValveKeyValue/0.13.1.398
+Authors: ValveKeyValue Contributors
+Copyright © ValveKeyValue Contributors
+License: MIT
+
+ini-parser-netstandard 2.5.3
+Package: https://www.nuget.org/packages/ini-parser-netstandard/2.5.3
+Authors: Ricardo Amores Hernández
+License: MIT
+
+SkyPod Audio Encoder / FFmpeg 8.1.3 (modified)
+Source: https://ffmpeg.org/releases/ffmpeg-8.1.3.tar.xz
+License: LGPL version 2.1 or later; see Licenses/FFmpeg-COPYING.LGPLv2.1.txt.
+This standalone build adds XWMA muxing and records WMA frame lengths.
+Corresponding modified source and build instructions are included at
+Licenses/FFmpeg/Skypod-AudioEncoder-8.1.3-Source.tar.xz inside this Studio package. The encoder
+is a separate executable and may be replaced with a compatible modified build.
+No GPL-only FFmpeg components or nonfree components are enabled.
+Windows runtime notices: Licenses/MinGW-w64-NOTICES.txt.
+GCC runtime terms: Licenses/GCC-RUNTIME-NOTICES.txt.
+
+Matching source for SkyPod and its linked dependencies is included at
+Licenses/SkyPod/Skypod-1.0.0-Source.zip. See SOURCES.txt.

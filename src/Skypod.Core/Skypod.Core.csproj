@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>Skypod.Core</RootNamespace>
+    <AssemblyName>Skypod.Core</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Mutagen.Bethesda.Skyrim" Version="0.54.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Skypod.Core.Tests" />
+  </ItemGroup>
+  <Import Project="..\..\tools\Skypod.AudioEncoder\Skypod.AudioEncoder.targets" />
+</Project>

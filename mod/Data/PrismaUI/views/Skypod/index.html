@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Skypod</title>
+    <link rel="icon" type="image/x-icon" href="skypod-icon.ico">
+    <link rel="stylesheet" href="style.css?v=gold-notes-4">
+</head>
+<body>
+    <main class="shell">
+        <header class="topbar">
+            <div class="brand-block">
+                <div class="brand-wordmark" role="img" aria-label="SkyPod">
+                    <span class="brand-initial" aria-hidden="true"><img src="skypod-emblem.png" alt="" draggable="false"></span>
+                    <div class="brand-lettering" aria-hidden="true">
+                        <span class="brand-name"><img src="skypod-kypod-engraved.png" alt="" draggable="false"></span>
+                        <p>YOUR SOUNDTRACK TO TAMRIEL</p>
+                    </div>
+                </div>
+            </div>
+            <div class="runtime-pill">
+                <span id="runtimeDot" class="runtime-dot"></span>
+                <span id="runtimeText">CONNECTING TO SKYRIM</span>
+            </div>
+            <button id="closeButton" class="icon-button close-button" title="Close Skypod">&times;</button>
+        </header>
+
+        <section class="workspace">
+            <aside class="player-card magic-border">
+                <div class="artwork" id="artwork">
+                    <div class="sky-ring ring-one" aria-hidden="true"><span class="orbit-note"><img src="skypod-note-single.png?v=gold-4" alt="" draggable="false"></span></div>
+                    <div class="sky-ring ring-two" aria-hidden="true"><span class="orbit-note"><img src="skypod-note-pair.png?v=gold-4" alt="" draggable="false"></span></div>
+                    <div class="sky-core"><img class="core-letter" src="skypod-emblem.png" alt="SkyPod S and treble clef" draggable="false"></div>
+                    <div class="equalizer" aria-hidden="true">
+                        <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                    </div>
+                </div>
+
+                <div id="nowLabel" class="now-label">SELECTED TRACK</div>
+                <h2 id="trackTitle">The Sky Is Waiting</h2>
+                <p id="trackArtist">Build the active soundtrack catalog in Skypod Studio</p>
+                <div class="track-badges">
+                    <span id="trackCategory" class="category-badge">NO LIBRARY</span>
+                    <span id="trackSource" class="source-badge">SKYPOD</span>
+                </div>
+
+                <div class="timeline">
+                    <span>SKYRIM</span>
+                    <div class="timeline-track"><div id="timelineFill" class="timeline-fill"></div></div>
+                    <span>LIVE</span>
+                </div>
+
+                <div class="transport">
+                    <button data-command="previous" class="transport-button small" title="Previous">&#x2039;</button>
+                    <button data-command="toggle" id="playButton" class="transport-button play" title="Play or stop">&#x25B6;</button>
+                    <button data-command="next" class="transport-button small" title="Next">&#x203A;</button>
+                </div>
+
+                <div class="quick-actions">
+                    <button id="playNowButton">&#x25B6; PLAY NOW</button>
+                    <button id="stopButton">&#x25A0; RETURN TO SKYRIM</button>
+                </div>
+
+                <div class="track-details">
+                    <div><span>AUDIO PROVIDER</span><strong id="detailProvider">Not loaded</strong></div>
+                    <div><span>RECORD SOURCE</span><strong id="detailRecordSource">Not loaded</strong></div>
+                    <div><span>LOCATIONS / PLAYLISTS</span><strong id="detailPlaylists">None</strong></div>
+                    <div><span>AUDIO SOURCE TYPE</span><strong id="detailAudioType">None</strong></div>
+                </div>
+            </aside>
+
+            <section class="library-panel">
+                <nav class="tabs" aria-label="Soundtrack sources">
+                    <button class="tab active" data-scope="playing">NOW PLAYING</button>
+                    <button class="tab" data-scope="all">ALL MUSIC</button>
+                    <button class="tab" data-scope="bethesda">BETHESDA</button>
+                    <button class="tab" data-scope="mods">MUSIC MODS</button>
+                    <button class="tab" data-scope="skypod">MY SKYPOD</button>
+                </nav>
+
+                <div class="library-toolbar">
+                    <label class="search-box">
+                        <span aria-hidden="true">&#x2315;</span>
+                        <span class="search-field">
+                            <input id="searchInput" type="search" aria-label="Search full soundtrack catalog" placeholder="Search every track, provider, plugin, place, or playlist">
+                            <small id="searchHint">SEARCHES THE FULL CATALOG</small>
+                        </span>
+                    </label>
+                    <label class="filter-select">
+                        <span>CATEGORY</span>
+                        <select id="categoryFilter" title="Filter category">
+                            <option value="all">All categories</option>
+                        </select>
+                    </label>
+                    <label class="filter-select provider-filter">
+                        <span>AUDIO PROVIDER</span>
+                        <select id="providerFilter" title="Filter audio provider">
+                            <option value="all">All providers</option>
+                        </select>
+                    </label>
+                    <button id="reloadButton" class="secondary-button">&#x21BB; RELOAD</button>
+                </div>
+
+                <div class="library-heading">
+                    <div>
+                        <span class="eyebrow">ACTIVE SOUNDTRACK</span>
+                        <h3 id="libraryName">Skyrim Load Order</h3>
+                    </div>
+                    <div class="catalog-summary">
+                        <div id="trackCount" class="track-count">0 TRACKS</div>
+                        <div class="page-controls">
+                            <button id="firstPage" title="First page" aria-label="First page">&#x00AB;</button>
+                            <button id="previousPage" title="Previous page" aria-label="Previous page">&#x2039;</button>
+                            <span id="pageLabel">PAGE 1 / 1</span>
+                            <button id="nextPage" title="Next page" aria-label="Next page">&#x203A;</button>
+                            <button id="lastPage" title="Last page" aria-label="Last page">&#x00BB;</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="trackList" class="track-list" role="listbox">
+                    <div class="empty-state">
+                        <div class="empty-glyph">&#x266B;</div>
+                        <h3>No soundtrack catalog loaded</h3>
+                        <p>Build <strong>Skypod Output</strong> through MO2, enable it, and press Reload.</p>
+                    </div>
+                </div>
+
+                <footer class="library-footer">
+                    <span><kbd>HOTKEY</kbd> CLOSE</span>
+                    <span>EXCLUSIONS APPLY AFTER REBUILD</span>
+                    <span id="currentMusicText">SKYRIM TRACK: DETECTING</span>
+                    <span id="bridgeState">WAITING FOR SKYPOD.DLL</span>
+                </footer>
+            </section>
+        </section>
+    </main>
+    <div id="toast" class="toast" role="status"></div>
+    <script src="catalog-model.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+SkyPod Mod and SkyPod Studio
+Copyright (C) 2026 Wondernutts
+
+Original SkyPod software is licensed under the GNU General Public License,
+version 3 only (SPDX-License-Identifier: GPL-3.0-only). This covers the SkyPod
+native plugin, Studio, shared application code, original scripts and web UI,
+and original build tools. See LICENSE.txt for the full license.
+
+SkyPod is distributed without any warranty, including the implied warranties
+of merchantability or fitness for a particular purpose.
+
+SOURCE AVAILABILITY
+See SOURCES.txt for the source archive and build instructions.
+
+THIRD-PARTY COMPONENTS
+Third-party code and assets retain their existing copyrights and license
+terms. This notice does not replace their licenses or claim ownership of them.
+See the package's third-party notices and Licenses directory.
+
+FFMPEG EXCLUSION
+The separately executed SkyPod Audio Encoder is a modified FFmpeg 8.1.3
+build. It is excluded from the SkyPod GPL-3.0-only grant and remains licensed
+under LGPL-2.1-or-later. Its notices, license, corresponding modified source,
+and build instructions remain in the Studio package's Licenses directory.
+
+CommonLibSSE retains its MIT license. Studio's Mutagen, GameFinder, and
+NexusMods.Paths components retain their GPL-3.0-only licenses. Their original
+license and attribution notices remain applicable.
+
+This license grants no rights to Bethesda game files, users' music, or other
+third-party content processed by SkyPod. Such content retains its own terms.

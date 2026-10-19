@@ -1,0 +1,1 @@
+Scriptname MCM_ConfigBase extends SKI_ConfigBase

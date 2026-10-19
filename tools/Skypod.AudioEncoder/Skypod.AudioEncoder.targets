@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <SkypodEncoderRid Condition="'$(RuntimeIdentifier)' != ''">$(RuntimeIdentifier)</SkypodEncoderRid>
+    <SkypodEncoderRid Condition="'$(SkypodEncoderRid)' == '' and '$(OS)' == 'Windows_NT'">win-x64</SkypodEncoderRid>
+    <SkypodEncoderRid Condition="'$(SkypodEncoderRid)' == ''">linux-x64</SkypodEncoderRid>
+    <SkypodEncoderName>Skypod.AudioEncoder</SkypodEncoderName>
+    <SkypodEncoderName Condition="'$(SkypodEncoderRid)' == 'win-x64'">Skypod.AudioEncoder.exe</SkypodEncoderName>
+    <SkypodEncoderExecutable>$(MSBuildThisFileDirectory)../runtimes/$(SkypodEncoderRid)/$(SkypodEncoderName)</SkypodEncoderExecutable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="$(SkypodEncoderExecutable)" Link="tools/$(SkypodEncoderName)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+  <Target Name="CheckSkypodAudioEncoder" BeforeTargets="PrepareForBuild" Condition="'$(DesignTimeBuild)' != 'true'">
+    <Error Condition="!Exists('$(SkypodEncoderExecutable)')" Text="Build the portable audio encoder for $(SkypodEncoderRid) before building Studio." />
+  </Target>
+</Project>

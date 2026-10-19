@@ -1,0 +1,406 @@
+<Window x:Class="Skypod.Studio.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Skypod.Studio"
+        Title="Skypod Studio" Height="900" Width="1540" MinHeight="720" MinWidth="1180"
+        Icon="Assets/Skypod-Gold.ico"
+        WindowStartupLocation="CenterScreen"
+        AllowDrop="True" Drop="Window_Drop" DragOver="Window_DragOver"
+        Closing="Window_Closing">
+    <Grid Margin="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,18">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Width="50" Height="86" ClipToBounds="True"
+                  Margin="0,0,7,0" VerticalAlignment="Center">
+                <Image Source="Assets/Skypod-Emblem.png" Width="97" Height="97"
+                       Margin="-23,-3,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                       Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" />
+            </Grid>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,12,0,0"
+                        AutomationProperties.Name="SkyPod">
+                <Grid Width="208" Height="49" ClipToBounds="True" HorizontalAlignment="Left">
+                    <Image Source="Assets/Skypod-Kypod-Engraved.png" Width="214" Height="71.333"
+                           Margin="-3,-10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" />
+                </Grid>
+                <TextBlock Text="Build your own Skyrim soundtrack" FontSize="12" Margin="0,7,0,0" Foreground="{StaticResource MutedBrush}" />
+            </StackPanel>
+            <Border Grid.Column="2" Background="#191123" BorderBrush="#5A4175" BorderThickness="1" CornerRadius="14" Padding="18,10"
+                    VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Width="9" Height="9" Fill="{Binding RuntimeStatusBrush}" Margin="0,0,9,0" />
+                    <TextBlock Text="{Binding RuntimeStatus}" Foreground="{StaticResource LavenderBrush}" VerticalAlignment="Center" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <WrapPanel Grid.Row="1" Margin="0,0,0,14" IsEnabled="{Binding CanEditLibrary}">
+            <Button Content="New" Click="NewLibrary_Click" />
+            <Button Content="Open Library" Click="OpenLibrary_Click" />
+            <Button Content="Save" Click="SaveLibrary_Click" />
+            <Button Content="Import Music" Click="ImportTracks_Click" />
+            <Button Content="Remove" Click="RemoveTracks_Click" />
+            <Button Content="Preview" Click="PreviewTrack_Click" />
+            <Button Content="Stop" Click="StopPreview_Click" />
+            <Button Content="MODLIST AUTHOR" Click="AuthorPack_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="12,0,0,0" />
+        </WrapPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="440" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="{StaticResource PanelBrush}" BorderBrush="#3E2C50" BorderThickness="1" CornerRadius="12" Padding="8" Margin="0,0,16,0">
+                <TabControl x:Name="LibraryTabs" Background="Transparent" BorderThickness="0" IsEnabled="{Binding CanEditLibrary}"
+                            SelectionChanged="LibraryTabs_SelectionChanged">
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem">
+                            <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+                            <Setter Property="Background" Value="#171120" />
+                            <Setter Property="BorderBrush" Value="#49375E" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="Padding" Value="16,9" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type TabItem}">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}"
+                                                SnapsToDevicePixels="True">
+                                            <ContentPresenter ContentSource="Header"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"
+                                                              RecognizesAccessKey="True" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="{StaticResource LavenderBrush}" />
+                                    <Setter Property="Background" Value="#21172D" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Foreground" Value="{StaticResource GoldBrush}" />
+                                    <Setter Property="Background" Value="#2B1D39" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource GoldBrush}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabControl.Resources>
+
+                    <TabItem Header="IMPORTED TRACKS">
+                        <Grid Margin="4,8,4,4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="8,2,8,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="YOUR SKYPOD TRACKS" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource GoldBrush}" />
+                                <TextBlock Grid.Column="1" Text="{Binding TrackCountText}" Foreground="{StaticResource MutedBrush}" />
+                            </Grid>
+
+                            <DataGrid x:Name="TrackGrid" Grid.Row="1" ItemsSource="{Binding Tracks}" AutoGenerateColumns="False"
+                                      Background="#100C17" Foreground="#F7F1FF" RowBackground="#100C17"
+                                      AlternatingRowBackground="#171020" GridLinesVisibility="Horizontal"
+                                      HorizontalGridLinesBrush="#2C2038" BorderThickness="0" SelectionMode="Extended"
+                                      CanUserAddRows="False" HeadersVisibility="Column" RowHeaderWidth="0"
+                                      CellEditEnding="TrackGrid_CellEditEnding" SelectionChanged="TrackGrid_SelectionChanged"
+                                      EnableRowVirtualization="True" VirtualizingPanel.VirtualizationMode="Recycling">
+                                <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn Header="ON" Binding="{Binding Enabled}" Width="44" />
+                                    <DataGridTextColumn Header="TITLE" Binding="{Binding Title}" Width="2*"
+                                                        ElementStyle="{StaticResource GridTextStyle}"
+                                                        EditingElementStyle="{StaticResource GridEditTextStyle}" />
+                                    <DataGridTextColumn Header="ARTIST" Binding="{Binding Artist}" Width="*"
+                                                        ElementStyle="{StaticResource GridTextStyle}"
+                                                        EditingElementStyle="{StaticResource GridEditTextStyle}" />
+                                    <DataGridTemplateColumn Header="CATEGORY" Width="150">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ComboBox ItemsSource="{Binding DataContext.CategoryOptions, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                          DisplayMemberPath="Name" SelectedValuePath="Value"
+                                                          SelectedValue="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          DropDownClosed="TrackCategory_DropDownClosed"
+                                                          Padding="5,2" Margin="1" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="ROUTE" Width="150">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ComboBox ItemsSource="{Binding DataContext.AutomaticPlaybackModes, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                          SelectedValuePath="Mode"
+                                                          SelectedValue="{Binding AutomaticPlayback.Mode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          DropDownClosed="TrackRoute_DropDownClosed"
+                                                          Padding="5,2" Margin="1"
+                                                          ToolTip="Play anywhere in this category or use exact locations from the Atlas">
+                                                    <ComboBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Name}" />
+                                                        </DataTemplate>
+                                                    </ComboBox.ItemTemplate>
+                                                </ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="WEIGHT" Binding="{Binding Weight}" Width="70"
+                                                        ElementStyle="{StaticResource GridTextStyle}"
+                                                        EditingElementStyle="{StaticResource GridEditTextStyle}" />
+                                    <DataGridTextColumn Header="GAIN" Binding="{Binding GainDb, StringFormat=F1}" Width="64"
+                                                        ElementStyle="{StaticResource GridTextStyle}"
+                                                        EditingElementStyle="{StaticResource GridEditTextStyle}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+
+                    <TabItem Header="ACTIVE SOUNDTRACK">
+                        <Grid Margin="4,8,4,4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="8,2,8,9">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="SKYRIM + ENABLED MUSIC MODS" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource GoldBrush}" />
+                                    <TextBlock Text="Winning music from the last Skypod Output build" FontSize="11" Foreground="{StaticResource MutedBrush}" />
+                                </StackPanel>
+                                <TextBlock Grid.Column="1" Text="{Binding CatalogCountText}" Foreground="{StaticResource MutedBrush}" VerticalAlignment="Center" />
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="8,0,8,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding CatalogSearch, UpdateSourceTrigger=PropertyChanged}"
+                                         ToolTip="Search title, artist, category, provider, plugin, path, or playlist"
+                                         Padding="10,8" />
+                                <Button Grid.Column="1" Content="RELOAD" Click="ReloadCatalog_Click" Margin="8,0,0,0" />
+                            </Grid>
+                            <DataGrid x:Name="CatalogGrid" Grid.Row="2" ItemsSource="{Binding VisibleCatalogTracks}" AutoGenerateColumns="False"
+                                      Background="#100C17" Foreground="#F7F1FF" RowBackground="#100C17"
+                                      AlternatingRowBackground="#171020" GridLinesVisibility="Horizontal"
+                                      HorizontalGridLinesBrush="#2C2038" BorderThickness="0" SelectionMode="Single"
+                                      IsReadOnly="True" CanUserAddRows="False" HeadersVisibility="Column" RowHeaderWidth="0"
+                                      SelectionChanged="CatalogGrid_SelectionChanged" EnableRowVirtualization="True"
+                                      VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="TITLE" Binding="{Binding Title}" Width="2*" ElementStyle="{StaticResource GridTextStyle}" />
+                                    <DataGridTextColumn Header="ARTIST" Binding="{Binding Artist}" Width="*" ElementStyle="{StaticResource GridTextStyle}" />
+                                    <DataGridTextColumn Header="TYPE" Binding="{Binding CategoryName}" Width="138" ElementStyle="{StaticResource GridTextStyle}" />
+                                    <DataGridTextColumn Header="WINNING AUDIO" Binding="{Binding Provider}" Width="1.25*" ElementStyle="{StaticResource GridTextStyle}" />
+                                    <DataGridTextColumn Header="ROUTES" Binding="{Binding PlaylistCountText}" Width="150" ElementStyle="{StaticResource GridTextStyle}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Border>
+
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <GroupBox Header="LIBRARY" IsEnabled="{Binding CanEditLibrary}">
+                        <StackPanel>
+                            <TextBlock Text="Name" Foreground="{StaticResource MutedBrush}" Margin="0,0,0,4" />
+                            <TextBox Text="{Binding LibraryName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                            <TextBlock Text="Drop audio files anywhere in this window to add them." TextWrapping="Wrap" Foreground="{StaticResource MutedBrush}" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="PLAY AT A LOCATION" IsEnabled="{Binding CanEditLibrary}">
+                        <StackPanel>
+                            <TextBlock Text="Select a song, click here to make it play at a location."
+                                       TextWrapping="Wrap" FontSize="13" Margin="0,0,0,12" Foreground="{StaticResource TextBrush}" />
+                            <TextBlock Text="{Binding SelectedRoutingTrackTitle}" FontSize="16" FontWeight="SemiBold"
+                                       Foreground="{StaticResource LavenderBrush}" TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="{Binding SelectedRoutingTrackSource}" Foreground="{StaticResource MutedBrush}"
+                                       FontSize="11" Margin="0,2,0,10" TextWrapping="Wrap" />
+                            <Border x:Name="LocationActionCard" BorderThickness="1"
+                                    CornerRadius="9" Padding="12" Margin="0,0,0,4">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="#15101B" />
+                                        <Setter Property="BorderBrush" Value="#42344E" />
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding RoutingEditorEnabled}" Value="True" />
+                                                    <Condition Binding="{Binding CanEditLibrary}" Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Background">
+                                                    <Setter.Value>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                            <GradientStop Color="#29133A" Offset="0" />
+                                                            <GradientStop Color="#1C1027" Offset="0.55" />
+                                                            <GradientStop Color="#2B1934" Offset="1" />
+                                                        </LinearGradientBrush>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="BorderBrush" Value="#E5BC67" />
+                                                <Setter Property="Effect">
+                                                    <Setter.Value><DropShadowEffect Color="#D6A846" BlurRadius="18" ShadowDepth="0" Opacity="0.52" /></Setter.Value>
+                                                </Setter>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding RoutingSelectionText}" Foreground="{StaticResource TextBrush}"
+                                               FontWeight="SemiBold" Margin="0,0,0,7" />
+                                    <Button x:Name="LocationMapButton" Click="OpenMapPicker_Click"
+                                            Style="{StaticResource PrimaryButtonStyle}"
+                                            IsEnabled="{Binding RoutingEditorEnabled}"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Padding="0"
+                                            Margin="-12,0,-12,0"
+                                            MinHeight="76"
+                                            HorizontalContentAlignment="Stretch"
+                                            ToolTip="Open the Atlas to choose where this song can play">
+                                        <Grid MinHeight="136" ClipToBounds="True">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="94" />
+                                                <RowDefinition Height="42" />
+                                            </Grid.RowDefinitions>
+                                            <local:MusicNoteFlow x:Name="AtlasNoteFlow" />
+                                            <TextBlock Grid.Row="1" Text="{Binding LocationActionText}" FontSize="13" FontWeight="SemiBold"
+                                                       Foreground="#FFE19A" TextWrapping="Wrap" TextAlignment="Center" Margin="16,0"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" />
+                                        </Grid>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="PLAY DURING A BOSS FIGHT" IsEnabled="{Binding CanEditLibrary}">
+                        <Border CornerRadius="9" BorderThickness="1">
+                            <Border.Style><Style TargetType="Border"><Setter Property="BorderBrush" Value="#493357"/><Setter Property="Background" Value="#160F20"/>
+                                <Style.Triggers><DataTrigger Binding="{Binding RoutingEditorEnabled}" Value="True">
+                                    <Setter Property="BorderBrush" Value="#F1C86D"/>
+                                    <Setter Property="Background"><Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#29133A" Offset="0"/>
+                                            <GradientStop Color="#1C1027" Offset="0.55"/>
+                                            <GradientStop Color="#2B1934" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value></Setter>
+                                    <Setter Property="Effect"><Setter.Value><DropShadowEffect Color="#F1C86D" BlurRadius="12" ShadowDepth="0" Opacity="0.3"/></Setter.Value></Setter>
+                                </DataTrigger></Style.Triggers></Style></Border.Style>
+                            <Grid>
+                            <local:BossLightning x:Name="BossLightningFlow" IsEnabled="{Binding RoutingEditorEnabled}"/>
+                            <StackPanel Margin="10">
+                                <Button x:Name="BossPickerButton" Click="OpenBossPicker_Click" IsEnabled="{Binding RoutingEditorEnabled}"
+                                        Background="Transparent" BorderThickness="0" Padding="4,6" HorizontalContentAlignment="Stretch" Margin="0">
+                                    <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="50"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                        <Image Source="{StaticResource BossDragonIcon}" Width="44" Height="44" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0">
+                                            <TextBlock Text="BOSSES" Foreground="{StaticResource GoldBrush}" FontSize="16" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding BossActionText}" Foreground="{StaticResource TextBrush}" FontSize="11" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                                <TextBlock Text="{Binding BossSelectionText}" Foreground="{StaticResource MutedBrush}" Margin="4,9,4,0" FontSize="11" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            </Grid>
+                        </Border>
+                    </GroupBox>
+
+                    <GroupBox Header="CURRENT GAME ROUTING" Visibility="{Binding CurrentGameRoutingVisibility}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding CurrentCatalogConditionsText}" Foreground="{StaticResource MutedBrush}"
+                                       FontSize="10" TextWrapping="Wrap" Margin="0,0,0,7" />
+                            <ItemsControl ItemsSource="{Binding CurrentGameRoutingDetails}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#120C1A" BorderBrush="#3E2C50" BorderThickness="1"
+                                                CornerRadius="6" Padding="8" Margin="0,0,0,5">
+                                            <TextBlock Text="{Binding}" Foreground="{StaticResource LavenderBrush}"
+                                                       FontSize="10" TextWrapping="Wrap" />
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="MOD MANAGER OUTPUT" IsEnabled="{Binding CanEditLibrary}">
+                        <StackPanel>
+                            <TextBlock Text="Mod manager" Foreground="{StaticResource MutedBrush}" Margin="0,0,0,4" />
+                            <ComboBox ItemsSource="{Binding ModManagerOptions}"
+                                      DisplayMemberPath="Label" SelectedValuePath="Value"
+                                      SelectedValue="{Binding SelectedModManager}"
+                                      Margin="0,0,0,8" />
+                            <StackPanel Visibility="{Binding VortexSettingsVisibility}">
+                                <TextBlock Text="Deployed Skyrim VR Data folder" Foreground="{StaticResource MutedBrush}" Margin="0,0,0,4" />
+                                <TextBox Text="{Binding GameDataDirectory, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,7" />
+                                <Button Content="Select Skyrim VR Data" Click="BrowseGameData_Click"
+                                        HorizontalAlignment="Left" Margin="0,0,0,10" />
+                            </StackPanel>
+                            <TextBlock Text="Output mod folder" Foreground="{StaticResource MutedBrush}" Margin="0,0,0,4" />
+                            <TextBox Text="{Binding OutputDirectory, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" />
+                            <Button Content="Browse" Click="BrowseOutput_Click" HorizontalAlignment="Left" Margin="0,0,0,8" />
+                            <CheckBox Content="Preserve previous output as a backup" IsChecked="{Binding PreserveExistingOutput}" />
+                            <CheckBox Content="Generate load-order-aware Skypod.esp" IsChecked="{Binding GeneratePlugin}"
+                                      Margin="0,8,0,0" />
+                            <TextBlock Text="{Binding ModManagerHelpText}"
+                                       Foreground="{StaticResource MutedBrush}" FontSize="11" TextWrapping="Wrap" Margin="0,5,0,0" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="AUDIO IMPORT" IsEnabled="{Binding CanEditLibrary}">
+                        <StackPanel>
+                            <TextBlock Text="Audio conversion is included. Import your songs and choose a bitrate below."
+                                       Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,0,0,10" />
+                            <TextBlock Text="Bitrate" Foreground="{StaticResource MutedBrush}" />
+                            <ComboBox SelectedValue="{Binding BitrateKbps}" SelectedValuePath="Content" Margin="0,4,0,0">
+                                <ComboBoxItem Content="48" />
+                                <ComboBoxItem Content="96" />
+                                <ComboBoxItem Content="160" />
+                                <ComboBoxItem Content="192" />
+                            </ComboBox>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <Button x:Name="BuildButton" Content="BUILD SKYPOD OUTPUT" Click="BuildOutput_Click"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            FontWeight="SemiBold" FontSize="14" Padding="16,13" Margin="0,0,0,8" />
+                    <Button x:Name="CancelButton" Content="Cancel Build" Click="CancelBuild_Click" IsEnabled="False" Margin="0" />
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="300" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding StatusText}" Foreground="{StaticResource MutedBrush}" VerticalAlignment="Center" />
+            <ProgressBar Grid.Column="1" Height="8" Minimum="0" Maximum="100" Value="{Binding BuildPercentage}"
+                         Background="#241831" Foreground="{StaticResource GoldBrush}" BorderThickness="0" />
+        </Grid>
+    </Grid>
+</Window>

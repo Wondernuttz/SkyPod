@@ -1,0 +1,1 @@
+Scriptname Skypod_MCM extends MCM_ConfigBase

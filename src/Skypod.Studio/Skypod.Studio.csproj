@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <CETCompat>false</CETCompat>
+    <RootNamespace>Skypod.Studio</RootNamespace>
+    <AssemblyName>Skypod.Studio</AssemblyName>
+    <ApplicationIcon>Assets\Skypod-Gold.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Skypod.Core\Skypod.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\LICENSE.txt" Link="LICENSE.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\SOURCES.txt" Link="SOURCES.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\NOTICE.txt" Link="NOTICE.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\packaging\STUDIO_README.txt" Link="README.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\tools\README.txt" Link="tools\README.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Update="Assets\Skypod-Gold.ico" Link="Skypod-Gold.ico" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\packaging\STUDIO_THIRD_PARTY_NOTICES.txt" Link="THIRD-PARTY-NOTICES.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\packaging\StudioLicenses\**\*" Link="Licenses\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Skypod-Gold.ico" />
+    <Resource Include="Assets\Skypod-Kypod-Engraved.png" />
+    <Resource Include="Assets\Skypod-Emblem.png" />
+    <Resource Include="Assets\Skypod-Note-Single.png" />
+    <Resource Include="Assets\Skypod-Note-Pair.png" />
+    <Resource Include="Assets\Skypod-Boss-Dragon.png" />
+  </ItemGroup>
+</Project>
